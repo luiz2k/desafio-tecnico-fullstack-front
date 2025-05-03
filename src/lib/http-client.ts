@@ -8,6 +8,11 @@ interface RequestOptions extends Omit<RequestInit, "body"> {
   headerAuthorization?: boolean;
 }
 
+type SuccessResponse<R> = {
+  message: string;
+  data: R;
+};
+
 type ErrorResponse = {
   message: string;
   error: string;
@@ -19,7 +24,10 @@ type ErrorResponse = {
  *
  * Essa função é um wrapper para padronizar as requisições HTTP.
  */
-export async function http<R>(url: string, init: RequestOptions): Promise<R> {
+export async function http<R>(
+  url: string,
+  init: RequestOptions,
+): Promise<SuccessResponse<R>> {
   const baseUrl = process.env.API_URL;
 
   const response = await fetch(`${baseUrl}${url}`, {
