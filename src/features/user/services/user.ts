@@ -1,5 +1,5 @@
 import { http } from "@/lib/http-client";
-import { UserRole } from "@/types/user-role-enum";
+import { UserRole } from "@/enums/user-role-enum";
 import { CreateUserDto } from "../validations/create-user-validation";
 
 type User = {
