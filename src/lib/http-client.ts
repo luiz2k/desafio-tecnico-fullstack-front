@@ -4,7 +4,7 @@ type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 interface RequestOptions extends Omit<RequestInit, "body"> {
   method?: HttpMethod;
-  body: Record<string, unknown>;
+  body?: Record<string, unknown>;
   headerAuthorization?: boolean;
 }
 
@@ -37,7 +37,7 @@ export async function http<R>(
       "Content-Type": "application/json",
       ...init.headers,
       ...(init.headerAuthorization && {
-        Authorization: `Bearer ${cookies().get("token")?.value}`,
+        Authorization: `Bearer ${cookies().get("access_token")?.value}`,
       }),
     },
   });
