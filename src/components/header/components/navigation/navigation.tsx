@@ -14,8 +14,8 @@ const links = [
   },
   {
     icon: AtSign,
-    title: "Participantes",
-    href: "/participant",
+    title: "Influenciadores",
+    href: "/influencer",
   },
 ];
 
