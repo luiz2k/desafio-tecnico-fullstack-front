@@ -8,7 +8,11 @@ import { SignInDto } from "../validations/sign-in-validation";
 export async function signInAction(data: SignInDto) {
   const response = await auth.signIn(data);
 
-  cookies().set("access_token", response.data.access_token);
+  if (response.data) {
+    cookies().set("access_token", response.data.access_token);
 
-  redirect("/user");
+    redirect("/user");
+  }
+
+  return response;
 }

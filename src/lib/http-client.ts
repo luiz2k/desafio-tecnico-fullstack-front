@@ -10,7 +10,8 @@ interface RequestOptions extends Omit<RequestInit, "body"> {
 
 type SuccessResponse<R> = {
   message: string;
-  data: R;
+  error?: string;
+  data?: R;
 };
 
 type ErrorResponse = {
@@ -45,7 +46,10 @@ export async function http<R>(
   if (!response.ok) {
     const data = (await response.json()) as ErrorResponse;
 
-    throw new Error(data.message);
+    return {
+      message: data.message,
+      error: data.error,
+    };
   }
 
   return await response.json();

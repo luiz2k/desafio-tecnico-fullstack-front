@@ -28,7 +28,7 @@ export async function User() {
           </thead>
 
           <tbody className="group text-sm text-black dark:text-white">
-            {users.data.map(({ _id, email, roles }, index) => {
+            {users.data?.map(({ _id, email, roles }, index) => {
               return (
                 <tr
                   key={index}
