@@ -1,6 +1,6 @@
 "use client";
 
-import { CampaignStatus } from "@/features/enums/campaign-status-enum";
+import { CampaignStatus } from "@/features/campaign/enums/campaign-status-enum";
 import { Influencer } from "@/features/influencer/types/influencer-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

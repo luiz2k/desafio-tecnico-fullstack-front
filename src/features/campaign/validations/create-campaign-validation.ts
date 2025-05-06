@@ -1,4 +1,4 @@
-import { CampaignStatus } from "@/features/enums/campaign-status-enum";
+import { CampaignStatus } from "@/features/campaign/enums/campaign-status-enum";
 import { dateStringSchema } from "@/validations/date-string-validation";
 import { z } from "zod";
 
