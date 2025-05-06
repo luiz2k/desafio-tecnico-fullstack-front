@@ -95,8 +95,6 @@ export function CreateCampaignDrawer({
     form.setValue("campaign.status", value as CampaignStatus);
   };
 
-  console.log(participants);
-
   const handleInfluencerParticipant = (value: string) => {
     if (participants.includes(value)) {
       setParticipants((prev) => {
