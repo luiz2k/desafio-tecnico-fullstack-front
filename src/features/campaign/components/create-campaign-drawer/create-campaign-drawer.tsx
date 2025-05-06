@@ -43,7 +43,7 @@ export function CreateCampaignDrawer({
 
   const [createInfluencer, setCreateInfluencer] = useState(false);
 
-  const form = useForm<CreateCampaignParticipantDto>({
+  const form = useForm({
     resolver: zodResolver(createCampaignParticipantSchema),
   });
 
@@ -80,7 +80,7 @@ export function CreateCampaignDrawer({
   ) => {
     const value = event.target.value;
 
-    form.setValue("campaign.startedAt", new Date(value));
+    form.setValue("campaign.startedAt", value);
   };
 
   const handleChangeFinishedAt = (
@@ -88,7 +88,7 @@ export function CreateCampaignDrawer({
   ) => {
     const value = event.target.value;
 
-    form.setValue("campaign.finishedAt", new Date(value));
+    form.setValue("campaign.finishedAt", value);
   };
 
   const handleChangeSelect = (value: string) => {
