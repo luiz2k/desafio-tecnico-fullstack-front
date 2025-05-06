@@ -1,6 +1,6 @@
 "use client";
 
-import { createCampaignAction } from "@/features/campaign/actions/create-campaign-action/create-campaign-action";
+import { createCampaignAction } from "@/features/campaign/actions/create-campaign-action";
 import { CampaignStatus } from "@/features/campaign/enums/campaign-status-enum";
 import {
   CreateCampaignParticipantDto,

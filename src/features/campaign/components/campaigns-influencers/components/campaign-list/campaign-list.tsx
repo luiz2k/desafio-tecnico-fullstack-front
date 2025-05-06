@@ -1,18 +1,16 @@
 "use client";
 
+import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
 import { dateFormatter } from "@/utils/formatters";
 import { Card, Typography } from "@material-tailwind/react";
 import { User } from "lucide-react";
-import { useState } from "react";
-import { Campaign } from "../../types/campaign-type";
+import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 
-type CampaignList = {
-  campaigns: Campaign[] | undefined;
-};
-
-export function CampaignList({ campaigns }: CampaignList) {
-  const [campaignSelected, setCampaignSelected] = useState<string>("");
+export function CampaignList() {
+  const { campaigns, campaignSelected, handleCampaignSelection } = useContext(
+    CampainsInfluencersContext,
+  );
 
   return (
     <div className="space-y-2">
@@ -21,7 +19,7 @@ export function CampaignList({ campaigns }: CampaignList) {
           {campaigns?.map((campaign) => (
             <Card
               key={campaign._id}
-              onClick={() => setCampaignSelected(campaign._id)}
+              onClick={() => handleCampaignSelection(campaign._id)}
               className={twMerge(
                 "cursor-pointer p-2.5",
                 campaignSelected === campaign._id &&

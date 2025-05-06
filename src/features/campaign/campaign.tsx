@@ -1,6 +1,7 @@
 import { influencer } from "../influencer/services/influencer";
-import { CampaignList } from "./components/campaign-list/campaign-list";
+import { CampaignsInfluencers } from "./components/campaigns-influencers/campaigns-influencers";
 import { CreateCampaignDrawer } from "./components/create-campaign-drawer/create-campaign-drawer";
+import { CampainsInfluencersContextProvider } from "./context/campains-influencers-context/campains-influencers-context";
 import { campaign } from "./services/campaign";
 
 export async function Campaign() {
@@ -15,11 +16,9 @@ export async function Campaign() {
         <CreateCampaignDrawer influencers={influencers.data} />
       </div>
 
-      <div className="grid grid-cols-[1fr_2fr] gap-4">
-        <CampaignList campaigns={campaigns.data} />
-
-        <div>Influenciadores</div>
-      </div>
+      <CampainsInfluencersContextProvider campaigns={campaigns.data}>
+        <CampaignsInfluencers />
+      </CampainsInfluencersContextProvider>
     </>
   );
 }
