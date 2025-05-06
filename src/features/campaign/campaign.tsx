@@ -1,7 +1,7 @@
 import { influencer } from "../influencer/services/influencer";
-import { campaign } from "./services/campaign";
-import { CampaignCard } from "./components/campaign-card/campaign-card";
+import { CampaignList } from "./components/campaign-list/campaign-list";
 import { CreateCampaignDrawer } from "./components/create-campaign-drawer/create-campaign-drawer";
+import { campaign } from "./services/campaign";
 
 export async function Campaign() {
   const campaigns = await campaign.findAll();
@@ -15,12 +15,8 @@ export async function Campaign() {
         <CreateCampaignDrawer influencers={influencers.data} />
       </div>
 
-      <div className="grid grid-cols-2">
-        <div className="space-y-2">
-          {campaigns.data?.map((campaign) => (
-            <CampaignCard key={campaign._id} campaign={campaign} />
-          ))}
-        </div>
+      <div className="grid grid-cols-[1fr_2fr] gap-4">
+        <CampaignList campaigns={campaigns.data} />
 
         <div>Influenciadores</div>
       </div>
