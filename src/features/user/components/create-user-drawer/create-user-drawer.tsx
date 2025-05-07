@@ -43,7 +43,11 @@ export default function CreateUserDrawer() {
 
   const onSubmit = async (data: CreateUserDto) => {
     try {
-      await createUserAction(data);
+      const response = await createUserAction(data);
+
+      if (response?.error) {
+        throw new Error(response.message);
+      }
 
       form.reset();
 

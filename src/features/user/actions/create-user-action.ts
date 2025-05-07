@@ -5,7 +5,11 @@ import { user } from "../services/user";
 import { CreateUserDto } from "../validations/create-user-validation";
 
 export async function createUserAction(data: CreateUserDto) {
-  await user.create(data);
+  const response = await user.create(data);
+
+  if (response.error) {
+    return response;
+  }
 
   revalidatePath("/user");
 }

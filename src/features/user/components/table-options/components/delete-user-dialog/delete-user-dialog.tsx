@@ -33,7 +33,11 @@ export function DeleteUserDialog({
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteUserAction(id);
+      const response = await deleteUserAction(id);
+
+      if (response?.error) {
+        throw new Error(response.message);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setDescription({
