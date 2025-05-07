@@ -9,34 +9,50 @@ import {
   TypographyProps,
 } from "@material-tailwind/react";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { DrawerFom } from "./components/drawer-fom/drawer-fom";
+import { findInfluencersAction } from "../../actions/find-influencers-action";
+import { InfluencerFilter } from "@/features/influencer/services/influencer";
 
 export type Description = {
   color: TypographyProps["color"];
   message: string;
 };
 
-type CreateCampaignDrawerProps = {
-  influencers?: Influencer[];
-};
-
-export function CreateCampaignDrawer({
-  influencers,
-}: CreateCampaignDrawerProps) {
+export function CreateCampaignDrawer() {
   const [description, setDescription] = useState<Description>({
     color: "default",
     message: "Preencha o formulário abaixo para criar uma nova campanha",
   });
 
+  const [influencers, setInfluencers] = useState<Influencer[]>([]);
+
   const [createInfluencer, setCreateInfluencer] = useState(false);
+
+  const findInfluencers = useCallback(async (filter?: InfluencerFilter) => {
+    const response = await findInfluencersAction(filter);
+
+    if (response.error) {
+      console.error(response.message);
+    }
+
+    if (response.data) {
+      setInfluencers(response.data);
+    }
+  }, []);
+
+  const openCreateCampaignDrawer = async () => {
+    await findInfluencers();
+
+    setCreateInfluencer(true);
+  };
 
   return (
     <Drawer open={createInfluencer} onOpenChange={setCreateInfluencer}>
       <Drawer.Trigger
         as={Button}
         size="sm"
-        onClick={() => setCreateInfluencer(true)}
+        onClick={() => openCreateCampaignDrawer()}
       >
         Criar Campanha
       </Drawer.Trigger>
@@ -67,6 +83,7 @@ export function CreateCampaignDrawer({
             setCreateInfluencer={setCreateInfluencer}
             setDescription={setDescription}
             influencers={influencers}
+            findInfluencers={findInfluencers}
           />
         </Drawer.Panel>
       </Drawer.Overlay>

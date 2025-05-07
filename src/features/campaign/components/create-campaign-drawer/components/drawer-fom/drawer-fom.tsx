@@ -15,25 +15,33 @@ import {
   Select,
   Typography,
 } from "@material-tailwind/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Description } from "../../create-campaign-drawer";
 import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
+import { InfluencerFilter } from "@/features/influencer/services/influencer";
 
 type DrawerFomProps = {
   setDescription: React.Dispatch<React.SetStateAction<Description>>;
   setCreateInfluencer: React.Dispatch<React.SetStateAction<boolean>>;
   influencers?: Influencer[];
+  findInfluencers: (filter?: InfluencerFilter) => Promise<void>;
 };
 
 export function DrawerFom({
   setDescription,
   setCreateInfluencer,
   influencers,
+  findInfluencers,
 }: DrawerFomProps) {
   const { updateCampaigns } = useContext(CampainsInfluencersContext);
 
   const [participants, setParticipants] = useState<string[]>([]);
+
+  const [filterParticipantSelect, setFilterParticipantSelect] =
+    useState<string>("name");
+  const [filterParticipantInput, setFilterParticipantInput] =
+    useState<string>("");
 
   const form = useForm({
     resolver: zodResolver(createCampaignParticipantSchema),
@@ -48,11 +56,8 @@ export function DrawerFom({
       }
 
       form.reset();
-
       setParticipants([]);
-
       setCreateInfluencer(false);
-
       updateCampaigns();
 
       setDescription({
@@ -106,6 +111,17 @@ export function DrawerFom({
       });
     }
   };
+
+  useEffect(() => {
+    const handleChangeSearch = async () => {
+      await findInfluencers({
+        key: filterParticipantSelect,
+        value: filterParticipantInput,
+      });
+    };
+
+    handleChangeSearch();
+  }, [filterParticipantInput, filterParticipantSelect, findInfluencers]);
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
@@ -205,6 +221,25 @@ export function DrawerFom({
           </Typography>
         </div>
 
+        <div className="flex gap-2.5">
+          <Input
+            placeholder="Pesquisar"
+            onChange={(e) => setFilterParticipantInput(e.target.value)}
+            className="bg-white"
+          />
+
+          <Select
+            value={filterParticipantSelect}
+            onValueChange={setFilterParticipantSelect}
+          >
+            <Select.Trigger className="w-60 bg-white" placeholder="Filtrar" />
+            <Select.List>
+              <Select.Option value="name">Nome</Select.Option>
+              <Select.Option value="social_network">Rede Social</Select.Option>
+            </Select.List>
+          </Select>
+        </div>
+
         <div className="max-h-[15rem] overflow-y-auto">
           {influencers && influencers.length > 0 ? (
             influencers.map((influencer) => (
@@ -220,10 +255,10 @@ export function DrawerFom({
                   className="-translate-y-0.5 cursor-pointer"
                 >
                   <Typography className="font-semibold">
-                    @{influencer.social_network}
+                    {influencer.name}
                   </Typography>
                   <Typography type="small" className="text-foreground">
-                    {influencer.name}
+                    @{influencer.social_network}
                   </Typography>
                 </label>
               </div>

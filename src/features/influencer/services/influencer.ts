@@ -3,6 +3,11 @@ import { CreateInfluencerDto } from "../validations/create-influencer-validation
 import { UpdateInfluencerDto } from "../validations/update-influencer-validation";
 import { Influencer } from "../types/influencer-type";
 
+export type InfluencerFilter = {
+  key?: string;
+  value?: string;
+};
+
 export const influencer = {
   async create(data: CreateInfluencerDto) {
     return await http<Influencer>("/influencer", {
@@ -12,8 +17,14 @@ export const influencer = {
     });
   },
 
-  async findAll() {
-    return await http<Influencer[]>("/influencer", {
+  async findAll(filter?: InfluencerFilter) {
+    const query = new URLSearchParams();
+
+    if (filter) {
+      query.set(filter.key || "", filter.value || "");
+    }
+
+    return await http<Influencer[]>(`/influencer?${query.toString()}`, {
       method: "GET",
       headerAuthorization: true,
     });
