@@ -15,9 +15,10 @@ import {
   Select,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Description } from "../../create-campaign-drawer";
+import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
 
 type DrawerFomProps = {
   setDescription: React.Dispatch<React.SetStateAction<Description>>;
@@ -30,6 +31,8 @@ export function DrawerFom({
   setCreateInfluencer,
   influencers,
 }: DrawerFomProps) {
+  const { updateCampaigns } = useContext(CampainsInfluencersContext);
+
   const [participants, setParticipants] = useState<string[]>([]);
 
   const form = useForm({
@@ -49,6 +52,8 @@ export function DrawerFom({
       setParticipants([]);
 
       setCreateInfluencer(false);
+
+      updateCampaigns();
 
       setDescription({
         color: "default",

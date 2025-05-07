@@ -9,16 +9,14 @@ export async function Campaign() {
   const influencers = await influencer.findAll();
 
   return (
-    <>
+    <CampainsInfluencersContextProvider campaigns={campaigns.data}>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="font-bold">Campanhas</h1>
 
         <CreateCampaignDrawer influencers={influencers.data} />
       </div>
 
-      <CampainsInfluencersContextProvider campaigns={campaigns.data}>
-        <CampaignsInfluencers />
-      </CampainsInfluencersContextProvider>
-    </>
+      <CampaignsInfluencers />
+    </CampainsInfluencersContextProvider>
   );
 }

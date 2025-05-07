@@ -4,6 +4,8 @@ import { CampainsInfluencersContext } from "@/features/campaign/context/campains
 import { abbreviateNumber } from "@/utils/formatters";
 import { useContext } from "react";
 import { TableOptions } from "./components/table-options/table-options";
+import { Button, Typography } from "@material-tailwind/react";
+import { DeleteCampaignModal } from "./components/delete-campaign-modal/delete-campaign-modal";
 
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
 
@@ -15,10 +17,15 @@ export function InfluencerList() {
   return (
     <div>
       {campaignSelected ? (
-        <>
+        <div className="overflow-auto">
+          <div className="flex justify-end gap-2.5 border-y bg-surface-light p-2.5">
+            <Button size="sm">Atualizar</Button>
+            <DeleteCampaignModal id={campaignSelected} />
+          </div>
+
           {influencers.length > 0 ? (
             <table className="w-full max-w-5xl">
-              <thead className="border-b border-surface bg-surface-light text-sm font-medium text-foreground dark:bg-surface-dark">
+              <thead className="border-b border-surface bg-surface-light text-sm font-medium text-foreground">
                 <tr>
                   {TABLE_HEAD.map((head) => (
                     <th
@@ -63,15 +70,30 @@ export function InfluencerList() {
               </tbody>
             </table>
           ) : (
-            <p className="text-center">
-              Nenhum influenciador foi adicionado a essa campanha
+            <p className="mt-4 text-center">
+              Nenhum influenciador foi adicionado
             </p>
           )}
-        </>
+        </div>
       ) : (
-        <p className="text-center">
-          Selecione uma campanha para ver os influenciadores
-        </p>
+        <div>
+          <Typography
+            as="div"
+            className="mb-4 h-3 w-1/2 rounded-full bg-gray-300"
+          >
+            &nbsp;
+          </Typography>
+
+          {Array.from({ length: 12 }).map((_, index) => (
+            <Typography
+              key={index}
+              as="div"
+              className="mb-2 h-2 w-full rounded-full bg-gray-300"
+            >
+              &nbsp;
+            </Typography>
+          ))}
+        </div>
       )}
     </div>
   );
