@@ -32,11 +32,8 @@ export async function Influencer() {
 
           <tbody className="group text-sm text-black dark:text-white">
             {influencers.data?.map(
-              ({ _id, name, social_network, followers }, index) => (
-                <tr
-                  key={index}
-                  className="border-b border-surface last:border-0"
-                >
+              ({ _id, name, social_network, followers }) => (
+                <tr key={_id} className="border-b border-surface last:border-0">
                   <td className="p-3">{name}</td>
                   <td className="p-3">{social_network}</td>
                   <td className="p-3">{abbreviateNumber.format(followers)}</td>

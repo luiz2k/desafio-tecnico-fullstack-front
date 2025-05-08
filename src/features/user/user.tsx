@@ -30,12 +30,9 @@ export async function User() {
           </thead>
 
           <tbody className="group text-sm text-black dark:text-white">
-            {users.data?.map(({ _id, email, roles }, index) => {
+            {users.data?.map(({ _id, email, roles }) => {
               return (
-                <tr
-                  key={index}
-                  className="border-b border-surface last:border-0"
-                >
+                <tr key={_id} className="border-b border-surface last:border-0">
                   <td className="p-3">{email}</td>
                   <td className="p-3">{roles.join(", ")}</td>
                   <td className="w-0 px-4">
