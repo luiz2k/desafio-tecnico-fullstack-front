@@ -12,9 +12,9 @@ type TableOptionsProps = {
   influencer: Omit<Influencer, "_id" | "__v">;
 };
 
-export function TableOptions({ id, influencer }: TableOptionsProps) {
-  const [deleteInfluencer, setDeleteInfluencer] = useState(false);
-  const [updateInfluencer, setUpdateInfluencer] = useState(false);
+export function TableActions({ id, influencer }: TableOptionsProps) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isUpdateInfluencerOpen, setIsUpdateInfluencerOpen] = useState(false);
 
   return (
     <>
@@ -23,10 +23,10 @@ export function TableOptions({ id, influencer }: TableOptionsProps) {
           <EllipsisVertical className="size-4" />
         </Menu.Trigger>
         <Menu.Content>
-          <Menu.Item onClick={() => setUpdateInfluencer(true)}>
+          <Menu.Item onClick={() => setIsUpdateInfluencerOpen(true)}>
             Atualizar
           </Menu.Item>
-          <Menu.Item onClick={() => setDeleteInfluencer(true)}>
+          <Menu.Item onClick={() => setIsDeleteDialogOpen(true)}>
             Deletar
           </Menu.Item>
         </Menu.Content>
@@ -34,15 +34,15 @@ export function TableOptions({ id, influencer }: TableOptionsProps) {
 
       <DeleteInfluencerDialog
         id={id}
-        deleteInfluencer={deleteInfluencer}
-        setDeleteInfluencer={setDeleteInfluencer}
+        isDeleteDialogOpen={isDeleteDialogOpen}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
       />
 
       <UpdateInfluencerDialog
         id={id}
         influencer={influencer}
-        updateInfluencer={updateInfluencer}
-        setUpdateInfluencer={setUpdateInfluencer}
+        isUpdateInfluencerOpen={isUpdateInfluencerOpen}
+        setIsUpdateInfluencerOpen={setIsUpdateInfluencerOpen}
       />
     </>
   );

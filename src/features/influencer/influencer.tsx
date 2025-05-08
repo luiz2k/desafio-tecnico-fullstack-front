@@ -1,6 +1,6 @@
 import { abbreviateNumber } from "@/utils/formatters";
 import { CreateInfluencerDrawer } from "./components/create-influencer-drawer/create-influencer-drawer";
-import { TableOptions } from "./components/table-options/table-options";
+import { TableActions } from "./components/table-actions/table-actions";
 import { influencer } from "./services/influencer";
 
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
@@ -38,7 +38,7 @@ export async function Influencer() {
                   <td className="p-3">{social_network}</td>
                   <td className="p-3">{abbreviateNumber.format(followers)}</td>
                   <td className="w-0 px-4">
-                    <TableOptions
+                    <TableActions
                       id={_id}
                       influencer={{ name, social_network, followers }}
                     />

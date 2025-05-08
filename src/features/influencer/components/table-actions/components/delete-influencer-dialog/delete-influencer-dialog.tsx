@@ -1,62 +1,34 @@
 "use client";
 
-import { deleteInfluencerAction } from "@/features/influencer/actions/delete-influencer-action";
 import {
   Button,
   Dialog,
   IconButton,
   Typography,
-  TypographyProps,
 } from "@material-tailwind/react";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useDeleteInfluencerDialog } from "./hooks/delete-influencer-dialog";
 
-type DeleteInfluencerDialogProps = {
+export type DeleteInfluencerDialogProps = {
   id: string;
-  deleteInfluencer: boolean;
-  setDeleteInfluencer: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-type Description = {
-  color: TypographyProps["color"];
-  message: string;
+  isDeleteDialogOpen: boolean;
+  setIsDeleteDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function DeleteInfluencerDialog({
   id,
-  deleteInfluencer,
-  setDeleteInfluencer,
+  isDeleteDialogOpen,
+  setIsDeleteDialogOpen,
 }: DeleteInfluencerDialogProps) {
-  const [description, setDescription] = useState<Description>({
-    color: "default",
-    message:
-      "Após a exclusão, os dados do influenciador serão perdidos permanentemente. Deseja prosseguir?",
+  const { description, handleDelete, isLoading } = useDeleteInfluencerDialog({
+    id,
   });
-
-  const handleDelete = async (id: string) => {
-    try {
-      const response = await deleteInfluencerAction(id);
-
-      if (response?.error) {
-        throw new Error(response.message);
-      }
-
-      setDeleteInfluencer(false);
-    } catch (error) {
-      if (error instanceof Error) {
-        setDescription({
-          color: "error",
-          message: error.message,
-        });
-      }
-    }
-  };
 
   return (
     <Dialog
       size="sm"
-      open={deleteInfluencer}
-      onOpenChange={setDeleteInfluencer}
+      open={isDeleteDialogOpen}
+      onOpenChange={setIsDeleteDialogOpen}
     >
       <Dialog.Overlay>
         <Dialog.Content>
@@ -84,7 +56,7 @@ export function DeleteInfluencerDialog({
               Cancelar
             </Dialog.DismissTrigger>
 
-            <Button color="error" onClick={() => handleDelete(id)}>
+            <Button color="error" disabled={isLoading} onClick={handleDelete}>
               Confirmar
             </Button>
           </div>
