@@ -2,11 +2,7 @@ import { http } from "@/lib/http-client";
 import { CreateInfluencerDto } from "../validations/create-influencer-validation";
 import { UpdateInfluencerDto } from "../validations/update-influencer-validation";
 import { Influencer } from "../types/influencer-type";
-
-export type InfluencerFilter = {
-  key?: string;
-  value?: string;
-};
+import { InfluencerFilter } from "@/features/influencer/services/influencer-filter-type";
 
 export const influencer = {
   async create(data: CreateInfluencerDto) {
