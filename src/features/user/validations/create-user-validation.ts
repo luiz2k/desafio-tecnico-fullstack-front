@@ -1,4 +1,4 @@
-import { UserRole } from "@/enums/user-role-enum";
+import { UserRole } from "@/features/user/enums/user-role-enum";
 import { z } from "zod";
 
 export const createUserSchema = z.object({

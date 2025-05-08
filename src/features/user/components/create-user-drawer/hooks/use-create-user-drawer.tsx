@@ -1,4 +1,4 @@
-import { UserRole } from "@/enums/user-role-enum";
+import { UserRole } from "@/features/user/enums/user-role-enum";
 import { createUserAction } from "@/features/user/actions/create-user-action";
 import {
   CreateUserDto,
