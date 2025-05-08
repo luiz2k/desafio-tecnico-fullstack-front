@@ -1,5 +1,5 @@
 import { deleteCampaignAction } from "@/features/campaign/actions/delete-campaign-action";
-import { Description } from "@/features/campaign/components/create-campaign-drawer/create-campaign-drawer";
+import { Description } from "@/features/campaign/components/create-campaign-drawer/hooks/use-create-campaign-drawer";
 import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
 import {
   Button,
