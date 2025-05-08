@@ -11,7 +11,9 @@ export async function Influencer() {
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="font-bold">Influenciadores</h1>
+        <h1 className="font-sans text-lg font-bold text-inherit antialiased md:text-xl lg:text-2xl">
+          Influenciadores
+        </h1>
 
         <CreateInfluencerDrawer />
       </div>
