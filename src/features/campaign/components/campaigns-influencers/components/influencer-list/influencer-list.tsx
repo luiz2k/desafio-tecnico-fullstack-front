@@ -1,7 +1,10 @@
 "use client";
 
+import { RolesContext } from "@/contexts/roles-context/roles-context";
 import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
+import { UserRole } from "@/features/user/enums/user-role-enum";
 import { abbreviateNumber } from "@/utils/formatters";
+import { hasRole } from "@/utils/has-role";
 import { Typography } from "@material-tailwind/react";
 import { useContext } from "react";
 import { CampaignActions } from "./components/campaign-actions/campaign-actions";
@@ -10,6 +13,9 @@ import { TableOptions } from "./components/table-options/table-options";
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
 
 export function InfluencerList() {
+  const { roles } = useContext(RolesContext);
+  const hasAccess = hasRole(roles, [UserRole.ADMIN]);
+
   const { influencers, campaignSelected } = useContext(
     CampainsInfluencersContext,
   );
@@ -51,15 +57,17 @@ export function InfluencerList() {
                         {abbreviateNumber.format(followers)}
                       </td>
                       <td className="w-0 px-4">
-                        <TableOptions
-                          campaignId={campaign}
-                          influencerId={_id}
-                          influencer={{
-                            name,
-                            social_network,
-                            followers,
-                          }}
-                        />
+                        {hasAccess && (
+                          <TableOptions
+                            campaignId={campaign}
+                            influencerId={_id}
+                            influencer={{
+                              name,
+                              social_network,
+                              followers,
+                            }}
+                          />
+                        )}
                       </td>
                     </tr>
                   ),

@@ -17,15 +17,19 @@ export function CampaignActions() {
 
   return (
     <div className="flex justify-end gap-2.5 border-y bg-surface-light p-2.5">
-      <Button onClick={() => setIsAddInfluencerOpen(true)}>
-        Adicionar Influenciador
-      </Button>
+      {hasAccess && (
+        <>
+          <Button onClick={() => setIsAddInfluencerOpen(true)}>
+            Adicionar Influenciador
+          </Button>
 
-      {isAddInfluencerOpen && (
-        <AddInfluencerModal
-          isAddInfluencerOpen={isAddInfluencerOpen}
-          setIsAddInfluencerOpen={setIsAddInfluencerOpen}
-        />
+          {isAddInfluencerOpen && (
+            <AddInfluencerModal
+              isAddInfluencerOpen={isAddInfluencerOpen}
+              setIsAddInfluencerOpen={setIsAddInfluencerOpen}
+            />
+          )}
+        </>
       )}
 
       <Button onClick={() => setIsUpdateCampaignOpen(true)}>Atualizar</Button>
