@@ -1,6 +1,7 @@
 import { http } from "@/lib/http-client";
-import { CreateCampaignParticipantDto } from "../validations/create-campaign-validation";
 import { Campaign } from "../types/campaign-type";
+import { CreateCampaignParticipantDto } from "../validations/create-campaign-validation";
+import { UpdateCampaignDto } from "../validations/update-campaign-validation";
 
 export type Filter = {
   title: string;
@@ -30,7 +31,13 @@ export const campaign = {
     });
   },
 
-  async update() {},
+  async update(id: string, data: UpdateCampaignDto) {
+    return await http<Campaign>(`/campaign/${id}`, {
+      method: "PATCH",
+      body: data,
+      headerAuthorization: true,
+    });
+  },
 
   async delete(id: string) {
     return await http(`/campaign/${id}`, {
