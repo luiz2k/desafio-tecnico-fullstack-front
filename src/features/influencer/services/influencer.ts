@@ -26,6 +26,13 @@ export const influencer = {
     });
   },
 
+  async findInfluencersUnrelatedToTheCampaign(id: string) {
+    return await http<Influencer[]>(`/influencer/unrelated-to-campaign/${id}`, {
+      method: "GET",
+      headerAuthorization: true,
+    });
+  },
+
   async update(id: string, data: UpdateInfluencerDto) {
     return await http(`/influencer/${id}`, {
       method: "PATCH",
