@@ -5,9 +5,9 @@ import { CampainsInfluencersContext } from "@/features/campaign/context/campains
 import { UserRole } from "@/features/user/enums/user-role-enum";
 import { abbreviateNumber } from "@/utils/formatters";
 import { hasRole } from "@/utils/has-role";
-import { Typography } from "@material-tailwind/react";
 import { useContext } from "react";
 import { CampaignActions } from "./components/campaign-actions/campaign-actions";
+import { Skeleton } from "./components/skeleton/skeleton";
 import { TableOptions } from "./components/table-options/table-options";
 
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
@@ -81,24 +81,7 @@ export function InfluencerList() {
           )}
         </div>
       ) : (
-        <div>
-          <Typography
-            as="div"
-            className="mb-4 h-3 w-1/2 rounded-full bg-gray-300"
-          >
-            &nbsp;
-          </Typography>
-
-          {Array.from({ length: 12 }).map((_, index) => (
-            <Typography
-              key={index}
-              as="div"
-              className="mb-2 h-2 w-full rounded-full bg-gray-300"
-            >
-              &nbsp;
-            </Typography>
-          ))}
-        </div>
+        <Skeleton />
       )}
     </div>
   );
