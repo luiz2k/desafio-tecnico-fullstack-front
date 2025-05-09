@@ -2,10 +2,10 @@
 
 import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
 import { abbreviateNumber } from "@/utils/formatters";
+import { Typography } from "@material-tailwind/react";
 import { useContext } from "react";
+import { CampaignActions } from "./components/campaign-actions/campaign-actions";
 import { TableOptions } from "./components/table-options/table-options";
-import { Button, Typography } from "@material-tailwind/react";
-import { DeleteCampaignModal } from "./components/delete-campaign-modal/delete-campaign-modal";
 
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
 
@@ -18,10 +18,7 @@ export function InfluencerList() {
     <div>
       {campaignSelected ? (
         <div className="overflow-auto">
-          <div className="flex justify-end gap-2.5 border-y bg-surface-light p-2.5">
-            <Button size="sm">Atualizar</Button>
-            <DeleteCampaignModal id={campaignSelected} />
-          </div>
+          <CampaignActions />
 
           {influencers.length > 0 ? (
             <table className="w-full max-w-5xl">

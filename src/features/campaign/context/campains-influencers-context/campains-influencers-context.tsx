@@ -8,7 +8,7 @@ import { findCampaignsAction } from "../../actions/find-campaigns-action";
 import { Filter } from "../../services/campaign";
 
 export type CampainsInfluencersContextType = {
-  campaigns: Campaign[] | undefined;
+  campaigns: Campaign[];
 
   influencers: Participant[];
   campaignSelected: string;
@@ -66,8 +66,6 @@ export const CampainsInfluencersContextProvider = ({
   const updateCampaigns = useCallback(async (filter?: Filter) => {
     try {
       const response = await findCampaignsAction(filter);
-
-      console.log(response);
 
       if (response?.error) {
         throw new Error(response.message);
