@@ -9,6 +9,7 @@ import { Filter } from "../../services/campaign";
 
 export type CampainsInfluencersContextType = {
   campaigns: Campaign[];
+  adminRole: boolean;
 
   influencers: Participant[];
   campaignSelected: string;
@@ -24,9 +25,11 @@ export const CampainsInfluencersContext = createContext(
 export const CampainsInfluencersContextProvider = ({
   children,
   campaigns: initialCampaigns,
+  adminRole,
 }: {
   children: React.ReactNode;
   campaigns: Campaign[] | undefined;
+  adminRole: boolean;
 }) => {
   const [campaignSelected, setCampaignSelected] = useState<string>("");
   const [influencers, setInfluencers] = useState<Participant[]>([]);
@@ -83,6 +86,7 @@ export const CampainsInfluencersContextProvider = ({
     <CampainsInfluencersContext.Provider
       value={{
         campaigns,
+        adminRole,
         influencers,
         campaignSelected,
         handleCampaignSelection,

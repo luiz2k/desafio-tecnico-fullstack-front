@@ -2,11 +2,14 @@ import { abbreviateNumber } from "@/utils/formatters";
 import { CreateInfluencerDrawer } from "./components/create-influencer-drawer/create-influencer-drawer";
 import { TableActions } from "./components/table-actions/table-actions";
 import { influencer } from "./services/influencer";
+import { hasRole } from "@/utils/hasRole";
+import { UserRole } from "../user/enums/user-role-enum";
 
 const TABLE_HEAD = ["Nome", "Rede Social", "Seguidores", "Ações"];
 
 export async function Influencer() {
   const influencers = await influencer.findAll();
+  const adminRole = await hasRole([UserRole.ADMIN]);
 
   return (
     <>
@@ -15,7 +18,7 @@ export async function Influencer() {
           Influenciadores
         </h1>
 
-        <CreateInfluencerDrawer />
+        {adminRole && <CreateInfluencerDrawer />}
       </div>
 
       <div className="overflow-auto">

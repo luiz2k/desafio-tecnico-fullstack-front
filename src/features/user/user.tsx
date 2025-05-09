@@ -1,11 +1,14 @@
+import { hasRole } from "@/utils/hasRole";
 import CreateUserDrawer from "./components/create-user-drawer/create-user-drawer";
 import { TableOptions } from "./components/table-options/table-options";
 import { user } from "./services/user";
+import { UserRole } from "./enums/user-role-enum";
 
 const TABLE_HEAD = ["E-mail", "Papel", "Ações"];
 
 export async function User() {
   const users = await user.findAll();
+  const adminRole = await hasRole([UserRole.ADMIN]);
 
   return (
     <>
@@ -14,7 +17,7 @@ export async function User() {
           Usuários
         </h1>
 
-        <CreateUserDrawer />
+        {adminRole && <CreateUserDrawer />}
       </div>
 
       <div className="overflow-auto">
@@ -36,7 +39,7 @@ export async function User() {
                   <td className="p-3">{email}</td>
                   <td className="p-3">{roles.join(", ")}</td>
                   <td className="w-0 px-4">
-                    <TableOptions id={_id} />
+                    {adminRole && <TableOptions id={_id} />}
                   </td>
                 </tr>
               );

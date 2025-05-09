@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { UpdateCampaignModal } from "./components/update-campaign-modal/update-campaign-modal";
 import { Button } from "@material-tailwind/react";
 import { DeleteCampaignModal } from "./components/delete-campaign-modal/delete-campaign-modal";
 import { AddInfluencerModal } from "./components/add-influencer-modal/add-influencer-modal";
+import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
 
 export function CampaignActions() {
+  const { adminRole } = useContext(CampainsInfluencersContext);
+
   const [isAddInfluencerOpen, setIsAddInfluencerOpen] = useState(false);
   const [isUpdateCampaignOpen, setIsUpdateCampaignOpen] = useState(false);
   const [isDeleteCampaignOpen, setIsDeleteCampaignOpen] = useState(false);
@@ -14,10 +17,6 @@ export function CampaignActions() {
       <Button onClick={() => setIsAddInfluencerOpen(true)}>
         Adicionar Influenciador
       </Button>
-      <Button onClick={() => setIsUpdateCampaignOpen(true)}>Atualizar</Button>
-      <Button color="error" onClick={() => setIsDeleteCampaignOpen(true)}>
-        Deletar
-      </Button>
 
       {isAddInfluencerOpen && (
         <AddInfluencerModal
@@ -26,6 +25,8 @@ export function CampaignActions() {
         />
       )}
 
+      <Button onClick={() => setIsUpdateCampaignOpen(true)}>Atualizar</Button>
+
       {isUpdateCampaignOpen && (
         <UpdateCampaignModal
           isUpdateCampaignOpen={isUpdateCampaignOpen}
@@ -33,11 +34,19 @@ export function CampaignActions() {
         />
       )}
 
-      {isDeleteCampaignOpen && (
-        <DeleteCampaignModal
-          isDeleteCampaignOpen={isDeleteCampaignOpen}
-          setIsDeleteCampaignOpen={setIsDeleteCampaignOpen}
-        />
+      {adminRole && isDeleteCampaignOpen && (
+        <>
+          <Button color="error" onClick={() => setIsDeleteCampaignOpen(true)}>
+            Deletar
+          </Button>
+
+          {isDeleteCampaignOpen && (
+            <DeleteCampaignModal
+              isDeleteCampaignOpen={isDeleteCampaignOpen}
+              setIsDeleteCampaignOpen={setIsDeleteCampaignOpen}
+            />
+          )}
+        </>
       )}
     </div>
   );
