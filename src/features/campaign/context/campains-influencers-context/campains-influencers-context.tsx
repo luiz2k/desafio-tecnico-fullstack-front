@@ -1,16 +1,14 @@
 "use client";
 
 import { createContext, useCallback, useState } from "react";
+import { findCampaignsAction } from "../../actions/find-campaigns-action";
 import { findParticipantsByCampaignIdAction } from "../../actions/find-participants-by-campaign-id-action";
+import { Filter } from "../../services/campaign";
 import { Campaign } from "../../types/campaign-type";
 import { Participant } from "../../types/participant-type";
-import { findCampaignsAction } from "../../actions/find-campaigns-action";
-import { Filter } from "../../services/campaign";
 
 export type CampainsInfluencersContextType = {
   campaigns: Campaign[];
-  adminRole: boolean;
-
   influencers: Participant[];
   campaignSelected: string;
   handleCampaignSelection: (id?: string) => Promise<void>;
@@ -25,11 +23,9 @@ export const CampainsInfluencersContext = createContext(
 export const CampainsInfluencersContextProvider = ({
   children,
   campaigns: initialCampaigns,
-  adminRole,
 }: {
   children: React.ReactNode;
   campaigns: Campaign[] | undefined;
-  adminRole: boolean;
 }) => {
   const [campaignSelected, setCampaignSelected] = useState<string>("");
   const [influencers, setInfluencers] = useState<Participant[]>([]);
@@ -86,7 +82,6 @@ export const CampainsInfluencersContextProvider = ({
     <CampainsInfluencersContext.Provider
       value={{
         campaigns,
-        adminRole,
         influencers,
         campaignSelected,
         handleCampaignSelection,

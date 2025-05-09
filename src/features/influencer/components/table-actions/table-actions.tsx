@@ -2,10 +2,13 @@
 
 import { IconButton, Menu } from "@material-tailwind/react";
 import { EllipsisVertical } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Influencer } from "../../types/influencer-type";
 import { DeleteInfluencerDialog } from "./components/delete-influencer-dialog/delete-influencer-dialog";
 import { UpdateInfluencerDialog } from "./components/update-influencer-dialog/update-influencer-dialog";
+import { RolesContext } from "@/contexts/roles-context/roles-context";
+import { hasRole } from "@/utils/has-role";
+import { UserRole } from "@/features/user/enums/user-role-enum";
 
 type TableOptionsProps = {
   id: string;
@@ -13,6 +16,9 @@ type TableOptionsProps = {
 };
 
 export function TableActions({ id, influencer }: TableOptionsProps) {
+  const { roles } = useContext(RolesContext);
+  const hasAccess = hasRole(roles, [UserRole.ADMIN]);
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isUpdateInfluencerOpen, setIsUpdateInfluencerOpen] = useState(false);
 
@@ -26,17 +32,21 @@ export function TableActions({ id, influencer }: TableOptionsProps) {
           <Menu.Item onClick={() => setIsUpdateInfluencerOpen(true)}>
             Atualizar
           </Menu.Item>
-          <Menu.Item onClick={() => setIsDeleteDialogOpen(true)}>
-            Deletar
-          </Menu.Item>
+          {hasAccess && (
+            <Menu.Item onClick={() => setIsDeleteDialogOpen(true)}>
+              Deletar
+            </Menu.Item>
+          )}
         </Menu.Content>
       </Menu>
 
-      <DeleteInfluencerDialog
-        id={id}
-        isDeleteDialogOpen={isDeleteDialogOpen}
-        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-      />
+      {hasAccess && (
+        <DeleteInfluencerDialog
+          id={id}
+          isDeleteDialogOpen={isDeleteDialogOpen}
+          setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+        />
+      )}
 
       <UpdateInfluencerDialog
         id={id}

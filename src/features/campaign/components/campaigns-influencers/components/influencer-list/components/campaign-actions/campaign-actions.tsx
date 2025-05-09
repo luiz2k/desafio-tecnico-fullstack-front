@@ -1,12 +1,15 @@
-import { useContext, useState } from "react";
-import { UpdateCampaignModal } from "./components/update-campaign-modal/update-campaign-modal";
+import { RolesContext } from "@/contexts/roles-context/roles-context";
+import { UserRole } from "@/features/user/enums/user-role-enum";
+import { hasRole } from "@/utils/has-role";
 import { Button } from "@material-tailwind/react";
-import { DeleteCampaignModal } from "./components/delete-campaign-modal/delete-campaign-modal";
+import { useContext, useState } from "react";
 import { AddInfluencerModal } from "./components/add-influencer-modal/add-influencer-modal";
-import { CampainsInfluencersContext } from "@/features/campaign/context/campains-influencers-context/campains-influencers-context";
+import { DeleteCampaignModal } from "./components/delete-campaign-modal/delete-campaign-modal";
+import { UpdateCampaignModal } from "./components/update-campaign-modal/update-campaign-modal";
 
 export function CampaignActions() {
-  const { adminRole } = useContext(CampainsInfluencersContext);
+  const { roles } = useContext(RolesContext);
+  const hasAccess = hasRole(roles, [UserRole.EDITOR]);
 
   const [isAddInfluencerOpen, setIsAddInfluencerOpen] = useState(false);
   const [isUpdateCampaignOpen, setIsUpdateCampaignOpen] = useState(false);
@@ -34,7 +37,7 @@ export function CampaignActions() {
         />
       )}
 
-      {adminRole && isDeleteCampaignOpen && (
+      {hasAccess && (
         <>
           <Button color="error" onClick={() => setIsDeleteCampaignOpen(true)}>
             Deletar
