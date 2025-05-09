@@ -41,19 +41,25 @@ export function TableActions({ id, influencer }: TableOptionsProps) {
       </Menu>
 
       {hasAccess && (
-        <DeleteInfluencerDialog
-          id={id}
-          isDeleteDialogOpen={isDeleteDialogOpen}
-          setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-        />
+        <>
+          {isDeleteDialogOpen && (
+            <DeleteInfluencerDialog
+              id={id}
+              isDeleteDialogOpen={isDeleteDialogOpen}
+              setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+            />
+          )}
+        </>
       )}
 
-      <UpdateInfluencerDialog
-        id={id}
-        influencer={influencer}
-        isUpdateInfluencerOpen={isUpdateInfluencerOpen}
-        setIsUpdateInfluencerOpen={setIsUpdateInfluencerOpen}
-      />
+      {isUpdateInfluencerOpen && (
+        <UpdateInfluencerDialog
+          id={id}
+          influencer={influencer}
+          isUpdateInfluencerOpen={isUpdateInfluencerOpen}
+          setIsUpdateInfluencerOpen={setIsUpdateInfluencerOpen}
+        />
+      )}
     </>
   );
 }
