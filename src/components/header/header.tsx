@@ -10,6 +10,7 @@ import {
 import { LogOut, Menu, X } from "lucide-react";
 import * as React from "react";
 import { Navigation } from "./components/navigation/navigation";
+import { signOut } from "@/utils/sign-out";
 
 export function Header() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -40,15 +41,18 @@ export function Header() {
             <Navigation />
           </div>
 
-          <Button
-            size="sm"
-            variant="ghost"
-            color="error"
-            className="hidden gap-2 md:ml-auto md:flex"
-          >
-            <LogOut className="size-4" />
-            Sair
-          </Button>
+          <form action={signOut} className="hidden md:ml-auto md:block">
+            <Button
+              size="sm"
+              variant="ghost"
+              color="error"
+              className="flex gap-2"
+              type="submit"
+            >
+              <LogOut className="size-4" />
+              Sair
+            </Button>
+          </form>
 
           <IconButton
             size="sm"
@@ -64,9 +68,17 @@ export function Header() {
         <Collapse open={openNav}>
           <Navigation />
 
-          <Button isFullWidth size="sm" color="error" className="mt-4">
-            Sair
-          </Button>
+          <form action={signOut}>
+            <Button
+              type="submit"
+              isFullWidth
+              size="sm"
+              color="error"
+              className="mt-4"
+            >
+              Sair
+            </Button>
+          </form>
         </Collapse>
       </Navbar>
     </header>
