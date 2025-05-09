@@ -16,4 +16,6 @@ export const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
   day: "numeric", // Mostra o dia da semana
   month: "numeric", // Mostra o mês
   year: "numeric", // Mostra o ano
+  hour: "numeric", // Mostra a hora
+  minute: "numeric", // Mostra os minutos
 });
