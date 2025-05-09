@@ -4,7 +4,7 @@ import { Influencer } from "@/features/influencer/types/influencer-type";
 import { IconButton, Menu } from "@material-tailwind/react";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
-import { DeleteInfluencerFromCampaign } from "./components/delete-influencer-from-campaign/delete-influencer-from-campaign";
+import { DeleteInfluencerFromCampaignDialog } from "./components/delete-influencer-from-campaign-dialog/delete-influencer-from-campaign-dialog";
 
 type TableOptionsProps = {
   campaignId: string;
@@ -12,7 +12,10 @@ type TableOptionsProps = {
   influencer: Omit<Influencer, "_id" | "__v">;
 };
 export function TableOptions({ campaignId, influencerId }: TableOptionsProps) {
-  const [deleteInfluencer, setDeleteInfluencer] = useState(false);
+  const [
+    isDeleteInfluencerFromCampaignDialogOpen,
+    setIsDeleteInfluencerFromCampaignDialogOpen,
+  ] = useState(false);
 
   return (
     <>
@@ -21,18 +24,26 @@ export function TableOptions({ campaignId, influencerId }: TableOptionsProps) {
           <EllipsisVertical className="size-4" />
         </Menu.Trigger>
         <Menu.Content>
-          <Menu.Item onClick={() => setDeleteInfluencer(true)}>
+          <Menu.Item
+            onClick={() => setIsDeleteInfluencerFromCampaignDialogOpen(true)}
+          >
             Deletar
           </Menu.Item>
         </Menu.Content>
       </Menu>
 
-      <DeleteInfluencerFromCampaign
-        campaignId={campaignId}
-        influencerId={influencerId}
-        deleteInfluencer={deleteInfluencer}
-        setDeleteInfluencer={setDeleteInfluencer}
-      />
+      {isDeleteInfluencerFromCampaignDialogOpen && (
+        <DeleteInfluencerFromCampaignDialog
+          campaignId={campaignId}
+          influencerId={influencerId}
+          isDeleteInfluencerFromCampaignDialogOpen={
+            isDeleteInfluencerFromCampaignDialogOpen
+          }
+          setIsDeleteInfluencerFromCampaignDialogOpen={
+            setIsDeleteInfluencerFromCampaignDialogOpen
+          }
+        />
+      )}
     </>
   );
 }
