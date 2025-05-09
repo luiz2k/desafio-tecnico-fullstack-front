@@ -24,7 +24,7 @@ export function UpdateCampaignModal({
     description,
     onSubmit,
     handleChangeStatusSelection,
-    currentCampain,
+    campaignSelected,
     renderError,
   } = useUpdateCampaignModal({ setIsUpdateCampaignOpen });
 
@@ -78,7 +78,7 @@ export function UpdateCampaignModal({
 
             <div>
               <Select
-                value={currentCampain?.status}
+                value={campaignSelected?.status}
                 onValueChange={handleChangeStatusSelection}
               >
                 <Select.Trigger placeholder="Status da campanha" />

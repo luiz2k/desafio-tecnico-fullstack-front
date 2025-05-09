@@ -36,23 +36,19 @@ type UseUpdateCampaignModalProps = {
 export function useUpdateCampaignModal({
   setIsUpdateCampaignOpen,
 }: UseUpdateCampaignModalProps) {
-  const { campaigns, campaignSelected, updateCampaigns } = useContext(
+  const { campaignSelected, updateCampaigns } = useContext(
     CampainsInfluencersContext,
   );
 
   const [description, setDescription] =
     useState<Description>(initialDescription);
 
-  const currentCampain = campaigns.find(
-    (campaign) => campaign._id === campaignSelected,
-  );
-
   const form = useForm({
     resolver: zodResolver(updateCampaignSchema),
     defaultValues: {
-      ...currentCampain,
-      startedAt: dateFormatter(currentCampain?.startedAt),
-      finishedAt: dateFormatter(currentCampain?.finishedAt),
+      ...campaignSelected,
+      startedAt: dateFormatter(campaignSelected?.startedAt),
+      finishedAt: dateFormatter(campaignSelected?.finishedAt),
     },
   });
 
@@ -62,14 +58,16 @@ export function useUpdateCampaignModal({
 
   const onSubmit = async (data: UpdateCampaignDto) => {
     try {
-      const response = await updateCampainAction(campaignSelected, data);
+      if (campaignSelected) {
+        const response = await updateCampainAction(campaignSelected?._id, data);
 
-      if (response.error) {
-        throw new Error(response.message);
+        if (response.error) {
+          throw new Error(response.message);
+        }
+
+        updateCampaigns();
+        setIsUpdateCampaignOpen(false);
       }
-
-      updateCampaigns();
-      setIsUpdateCampaignOpen(false);
     } catch (error) {
       if (error instanceof Error) {
         setDescription({
@@ -94,7 +92,7 @@ export function useUpdateCampaignModal({
     description,
     onSubmit,
     handleChangeStatusSelection,
-    currentCampain,
+    campaignSelected,
     renderError,
   };
 }

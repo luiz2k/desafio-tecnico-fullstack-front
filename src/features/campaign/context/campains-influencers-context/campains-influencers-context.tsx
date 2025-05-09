@@ -10,8 +10,8 @@ import { Participant } from "../../types/participant-type";
 export type CampainsInfluencersContextType = {
   campaigns: Campaign[];
   influencers: Participant[];
-  campaignSelected: string;
-  handleCampaignSelection: (id?: string) => Promise<void>;
+  campaignSelected: Campaign | null;
+  handleCampaignSelection: (campain?: Campaign) => Promise<void>;
   listParticipants: (id: string) => Promise<void>;
   updateCampaigns: (filter?: Filter) => Promise<void>;
 };
@@ -27,7 +27,9 @@ export const CampainsInfluencersContextProvider = ({
   children: React.ReactNode;
   campaigns: Campaign[] | undefined;
 }) => {
-  const [campaignSelected, setCampaignSelected] = useState<string>("");
+  const [campaignSelected, setCampaignSelected] = useState<Campaign | null>(
+    null,
+  );
   const [influencers, setInfluencers] = useState<Participant[]>([]);
   const [campaigns, setCampaigns] = useState<Campaign[]>(
     initialCampaigns || [],
@@ -49,16 +51,16 @@ export const CampainsInfluencersContextProvider = ({
     }
   };
 
-  const handleCampaignSelection = async (id?: string) => {
-    if (id) {
-      await listParticipants(id);
+  const handleCampaignSelection = async (campain?: Campaign) => {
+    if (campain) {
+      await listParticipants(campain._id);
 
-      setCampaignSelected(id);
+      setCampaignSelected(campain);
 
       return;
     }
 
-    setCampaignSelected("");
+    setCampaignSelected(null);
     setInfluencers([]);
   };
 

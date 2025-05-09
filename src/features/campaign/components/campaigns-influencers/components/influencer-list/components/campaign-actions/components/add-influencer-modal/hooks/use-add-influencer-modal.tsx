@@ -30,17 +30,19 @@ export function useAddInfluencerModal({
     try {
       setIsDisabled(true);
 
-      const response = await addParticipantsToTheCampaignAction(
-        campaignSelected,
-        participants,
-      );
+      if (campaignSelected) {
+        const response = await addParticipantsToTheCampaignAction(
+          campaignSelected?._id,
+          participants,
+        );
 
-      if (response.error) {
-        throw new Error(response.message);
+        if (response.error) {
+          throw new Error(response.message);
+        }
+
+        await listParticipants(campaignSelected?._id);
+        setIsAddInfluencerOpen(false);
       }
-
-      await listParticipants(campaignSelected);
-      setIsAddInfluencerOpen(false);
     } catch (error) {
       if (error instanceof Error) {
         setDescription({
@@ -58,23 +60,26 @@ export function useAddInfluencerModal({
       try {
         setIsLoading(true);
 
-        const influencers =
-          await findInfluencersUnrelatedToTheCampaignAction(campaignSelected);
+        if (campaignSelected) {
+          const influencers = await findInfluencersUnrelatedToTheCampaignAction(
+            campaignSelected?._id,
+          );
 
-        if (influencers.error) {
-          throw new Error(influencers.message);
-        }
+          if (influencers.error) {
+            throw new Error(influencers.message);
+          }
 
-        if (influencers.data?.length === 0) {
-          setDescription({
-            color: "error",
-            message:
-              "Nenhum influenciador disponível para ser adicionado a essa campanha",
-          });
-        }
+          if (influencers.data?.length === 0) {
+            setDescription({
+              color: "error",
+              message:
+                "Nenhum influenciador disponível para ser adicionado a essa campanha",
+            });
+          }
 
-        if (influencers.data) {
-          setInfluencers(influencers.data);
+          if (influencers.data) {
+            setInfluencers(influencers.data);
+          }
         }
       } catch (error) {
         if (error instanceof Error) {

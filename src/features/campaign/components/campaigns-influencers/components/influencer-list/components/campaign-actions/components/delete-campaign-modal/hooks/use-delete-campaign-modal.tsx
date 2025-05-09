@@ -21,16 +21,18 @@ export function useDeleteCampaignModal({
 
   const handleDelete = async () => {
     try {
-      const response = await deleteCampaignAction(campaignSelected);
+      if (campaignSelected) {
+        const response = await deleteCampaignAction(campaignSelected?._id);
 
-      if (response?.error) {
-        throw new Error(response.message);
+        if (response?.error) {
+          throw new Error(response.message);
+        }
+
+        await updateCampaigns();
+        await handleCampaignSelection();
+
+        setIsDeleteCampaignOpen(false);
       }
-
-      await updateCampaigns();
-      await handleCampaignSelection();
-
-      setIsDeleteCampaignOpen(false);
     } catch (error) {
       if (error instanceof Error) {
         setDescription({

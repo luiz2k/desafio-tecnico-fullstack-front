@@ -23,10 +23,10 @@ export function CampaignList() {
             {campaigns?.map((campaign) => (
               <Card
                 key={campaign._id}
-                onClick={() => handleCampaignSelection(campaign._id)}
+                onClick={() => handleCampaignSelection(campaign)}
                 className={twMerge(
                   "cursor-pointer p-2.5",
-                  campaignSelected === campaign._id &&
+                  campaignSelected?._id === campaign._id &&
                     "cursor-default bg-zinc-100",
                 )}
               >
