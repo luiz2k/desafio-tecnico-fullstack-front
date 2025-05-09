@@ -9,7 +9,7 @@ import { UpdateCampaignModal } from "./components/update-campaign-modal/update-c
 
 export function CampaignActions() {
   const { roles } = useContext(RolesContext);
-  const hasAccess = hasRole(roles, [UserRole.EDITOR]);
+  const hasAccess = hasRole(roles, [UserRole.ADMIN]);
 
   const [isAddInfluencerOpen, setIsAddInfluencerOpen] = useState(false);
   const [isUpdateCampaignOpen, setIsUpdateCampaignOpen] = useState(false);
