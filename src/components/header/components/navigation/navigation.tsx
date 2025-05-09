@@ -8,14 +8,14 @@ const links = [
     href: "/user",
   },
   {
-    icon: Megaphone,
-    title: "Campanhas",
-    href: "/campaign",
-  },
-  {
     icon: AtSign,
     title: "Influenciadores",
     href: "/influencer",
+  },
+  {
+    icon: Megaphone,
+    title: "Campanhas",
+    href: "/campaign",
   },
 ];
 
