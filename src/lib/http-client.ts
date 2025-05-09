@@ -4,7 +4,7 @@ type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 interface RequestOptions extends Omit<RequestInit, "body"> {
   method?: HttpMethod;
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | unknown[];
   headerAuthorization?: boolean;
 }
 
