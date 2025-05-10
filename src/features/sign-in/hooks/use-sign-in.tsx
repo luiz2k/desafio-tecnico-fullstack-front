@@ -16,7 +16,11 @@ export function useSignIn() {
 
   const handleSubmit = async (data: SignInDto) => {
     try {
-      await signInAction(data);
+      const response = await signInAction(data);
+
+      if (response.error) {
+        throw new Error(response.message);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setSubtitle({

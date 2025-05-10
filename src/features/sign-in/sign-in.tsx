@@ -50,7 +50,9 @@ export function SignIn() {
         </Form.Body>
 
         <Form.Footer>
-          <Button type="submit">Logar</Button>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            Logar
+          </Button>
         </Form.Footer>
       </Form.Wrapper>
     </div>
