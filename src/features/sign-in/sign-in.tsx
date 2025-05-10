@@ -21,7 +21,11 @@ export function SignIn() {
 
         <Form.Body>
           <div>
-            <Input placeholder="E-mail" {...form.register("email")}>
+            <Input
+              type="email"
+              placeholder="E-mail"
+              {...form.register("email")}
+            >
               <Input.Icon>
                 <Mail className="h-full w-full" />
               </Input.Icon>
@@ -35,7 +39,11 @@ export function SignIn() {
           </div>
 
           <div>
-            <Input placeholder="Senha" {...form.register("password")}>
+            <Input
+              type="password"
+              placeholder="Senha"
+              {...form.register("password")}
+            >
               <Input.Icon>
                 <Lock className="h-full w-full" />
               </Input.Icon>
