@@ -18,7 +18,7 @@ export function useSignIn() {
     try {
       const response = await signInAction(data);
 
-      if (response.error) {
+      if (response?.error) {
         throw new Error(response.message);
       }
     } catch (error) {
