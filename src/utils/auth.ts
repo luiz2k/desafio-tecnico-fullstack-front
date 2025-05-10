@@ -28,4 +28,3 @@ export async function auth(): Promise<Payload | undefined> {
 
   return decoded;
 }
-
