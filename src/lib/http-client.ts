@@ -1,3 +1,4 @@
+import { env } from "@/validations/env-validation";
 import { cookies } from "next/headers";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -29,9 +30,7 @@ export async function http<R>(
   url: string,
   init: RequestOptions,
 ): Promise<SuccessResponse<R>> {
-  const baseUrl = process.env.API_URL;
-
-  const response = await fetch(`${baseUrl}${url}`, {
+  const response = await fetch(`${env.API_URL}${url}`, {
     ...init,
     body: init.body ? JSON.stringify(init.body) : undefined,
     headers: {
