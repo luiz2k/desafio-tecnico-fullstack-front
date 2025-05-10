@@ -24,6 +24,7 @@ export function SignIn() {
             <Input
               type="email"
               placeholder="E-mail"
+              autoComplete="email"
               {...form.register("email")}
             >
               <Input.Icon>
@@ -42,6 +43,7 @@ export function SignIn() {
             <Input
               type="password"
               placeholder="Senha"
+              autoComplete="password"
               {...form.register("password")}
             >
               <Input.Icon>
